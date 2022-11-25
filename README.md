@@ -1,1 +1,1 @@
-# ML-Spam-Email-Detection
+# ML Spam Email Detection
