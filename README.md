@@ -20,4 +20,4 @@ AWS services used:
   - S3
   - CloudFormation
 
-### Please note that the notebook is not my own. I used it in order to further my knowledge of deep learning and using AWS SageMaker. I am including it in case someone else comes across it and wants to learn from it as I have done.
+### Please note that the notebook is not my own code. I used it in order to further my knowledge of deep learning and using AWS SageMaker. I am including it in case someone else comes across it and wants to learn from it as I have done.
