@@ -10,24 +10,24 @@ Resources:
   S3EmailBucket:
     Type: 'AWS::S3::Bucket'
     DependsOn:
-      - spamFilter
+      - LF1
       - S3BucketPermission
     Properties:
-      BucketName: 'hw-3-emails'
+      BucketName: 'teststupidbucketnamethingy'
       AccessControl: PublicRead
       NotificationConfiguration:
         LambdaConfigurations:
           - Event: s3:ObjectCreated:*
-            Function: !GetAtt spamFilter.Arn
+            Function: !GetAtt LF1.Arn
 
   S3BucketPermission:
     Type: 'AWS::Lambda::Permission'
     Properties: 
       Action: 'lambda:InvokeFunction'
-      FunctionName: !GetAtt spamFilter.Arn
+      FunctionName: !GetAtt LF1.Arn
       Principal: s3.amazonaws.com
-      SourceAccount: 502659756548
-      SourceArn: arn:aws:s3:::hw-3-emails
+      SourceAccount: 372221573313
+      SourceArn: arn:aws:s3:::teststupidbucketnamethingy
 
   S3EmailBucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
@@ -47,9 +47,9 @@ Resources:
               - !Sub arn:aws:s3:::${S3EmailBucket}/*
             Condition:
               StringEquals:
-                aws:Referer: '502659756548'
+                aws:Referer: '372221573313'
 
-  spamFilterRole:
+  LF1Role:
     Type: 'AWS::IAM::Role'
     Properties:
       AssumeRolePolicyDocument:
@@ -68,18 +68,18 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonSESFullAccess
         - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
 
-  spamFilter:
+  LF1:
     Type: 'AWS::Lambda::Function'
     DependsOn:
-      - spamFilterRole
+      - LF1Role
     Properties:
-      FunctionName: 'spamFilter'
+      FunctionName: 'LF1'
       Runtime: python3.9
-      Role: !GetAtt spamFilterRole.Arn
+      Role: !GetAtt LF1Role.Arn
       Handler: lambda_function.lambda_handler
       Code:
-        S3Bucket: hw-3-emails
-        S3Key: lambda-code.zip
+        S3Bucket: hw-3-lambda
+        S3Key: Lambda.zip
       Environment:
         Variables:
           endpoint_name: !Ref SageMakerEndpoint
@@ -88,7 +88,7 @@ Resources:
   S3RuleSet:
     Type: 'AWS::SES::ReceiptRuleSet'
     Properties:
-      RuleSetName: 'hw-3-emails'
+      RuleSetName: 'teststupidbucketnamethingy'
 
   S3Rule:
     Type: 'AWS::SES::ReceiptRule'
